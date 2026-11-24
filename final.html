@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+</head>
+
+<body>
+  
+</body>
+
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>New Gas Connection Application Form</title>
+  <style>
+    :root {
+      --primary: #ea580c;
+      --primary-hover: #c2410c;
+      --bg: #fff7ed;
+      --card-bg: #ffffff;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --border: #fed7aa;
+      --required: #dc2626;
+      --success: #059669;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      padding: 24px 16px;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(194, 65, 12, 0.12);
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #b91c1c, #f97316);
+      color: #ffffff;
+      padding: 28px 24px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 1.65rem;
+      margin-bottom: 6px;
+    }
+
+    .header p {
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    /* Stepper */
+    .stepper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
+      padding: 20px;
+      background: #fffaf5;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .step-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .step-item.active {
+      color: var(--primary);
+    }
+
+    .step-item.completed {
+      color: var(--success);
+    }
+
+    .step-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffedd5;
+      color: #9a3412;
+      font-size: 0.9rem;
+    }
+
+    .step-item.active .step-circle {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .step-item.completed .step-circle {
+      background: var(--success);
+      color: #ffffff;
+    }
+
+    .step-divider {
+      width: 40px;
+      height: 2px;
+      background: var(--border);
+    }
+
+    /* Form Sections */
+    .form-body {
+      padding: 28px 24px;
+    }
+
+    .section-title {
+      font-size: 1.15rem;
+      color: #b91c1c;
+      border-bottom: 2px solid #ffedd5;
+      padding-bottom: 8px;
+      margin: 24px 0 16px;
+    }
+
+    .section-title:first-child {
+      margin-top: 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 14px;
+    }
+
+    label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #374151;
+    }
+
+    label span.req {
+      color: var(--required);
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="date"],
+    input[type="password"],
+    select,
+    textarea {
+      padding: 10px 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.18);
+    }
+
+    /* Card Number with Detected Brand Badge */
+    .card-input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .card-input-wrap input {
+      padding-right: 105px;
+    }
+
+    .card-brand-badge {
+      position: absolute;
+      right: 10px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: #f3f4f6;
+      color: #6b7280;
+      pointer-events: none;
+    }
+
+    .card-brand-badge.detected {
+      background: #fff7ed;
+      color: #c2410c;
+      border: 1px solid #fed7aa;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 18px;
+      padding-top: 6px;
+    }
+
+    .radio-group label {
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 20px;
+      background: #fff7ed;
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid #fed7aa;
+    }
+
+    .checkbox-group input {
+      margin-top: 4px;
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    .checkbox-group label {
+      font-weight: 400;
+      font-size: 0.9rem;
+      margin: 0;
+      cursor: pointer;
+    }
+
+    .btn-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+      margin-left: auto;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-secondary {
+      background: #ffedd5;
+      color: #9a3412;
+    }
+
+    .btn-secondary:hover {
+      background: #fed7aa;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* Summary Box in Step 2 */
+    .fee-box {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .fee-box strong {
+      font-size: 1.2rem;
+      color: #b91c1c;
+    }
+
+    .success-screen {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .success-screen h2 {
+      color: var(--success);
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>New Gas Connection Application</h1>
+      <p>Fill out all the required details carefully to apply for a new LPG/PNG connection</p>
+    </div>
+
+    <!-- Stepper -->
+    <div class="stepper">
+      <div class="step-item active" id="stepIndicator1">
+        <div class="step-circle">1</div>
+        <span>Application Details</span>
+      </div>
+      <div class="step-divider"></div>
+      <div class="step-item" id="stepIndicator2">
+        <div class="step-circle">2</div>
+        <span>Debit Card Payment</span>
+      </div>
+    </div>
+
+    <div class="form-body">
+      <!-- STEP 1: APPLICATION DETAILS -->
+      <form id="step1Form">
+        <!-- 1. Connection Preferences -->
+        <h2 class="section-title">1. Connection Preferences</h2>
+        <div class="grid">
+          <div class="form-group">
+            <label for="provider">Gas Provider <span class="req">*</span></label>
+            <select id="provider" required>
+              <option value="">-- Select Provider --</option>
+              <option value="Indane Gas (IndianOil)">Indane Gas (IndianOil)</option>
+              <option value="HP Gas (Hindustan Petroleum)">HP Gas (Hindustan Petroleum)</option>
+              <option value="Bharat Gas (BPCL)">Bharat Gas (BPCL)</option>
+              <option value="Piped Natural Gas (PNG)">Piped Natural Gas (PNG)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="connectionType">Connection Type <span class="req">*</span></label>
+            <select id="connectionType" required>
+              <option value="Domestic (14.2 kg Cylinder)">Domestic (14.2 kg Cylinder)</option>
+              <option value="Domestic (5 kg Cylinder)">Domestic (5 kg Cylinder)</option>
+              <option value="Commercial (19 kg Cylinder)">Commercial (19 kg Cylinder)</option>
+              <option value="PMUY (Ujjwala Scheme)">PMUY (Ujjwala Scheme)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 2. Applicant Personal Details -->
+        <h2 class="section-title">2. Applicant Personal Details</h2>
+        <div class="grid">
+          <div class="form-group">
+            <label for="fullName">Full Name (as per ID) <span class="req">*</span></label>
+            <input type="text" id="fullName" placeholder="Enter full name" required />
+          </div>
+
+          <div class="form-group">
+            <label for="guardianName">Father's / Spouse's Name <span class="req">*</span></label>
+            <input type="text" id="guardianName" placeholder="Enter father's or spouse's name" required />
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="form-group">
+            <label for="dob">Date of Birth <span class="req">*</span></label>
+            <input type="date" id="dob" required />
+          </div>
+
+          <div class="form-group">
+            <label for="age">Age (Minimum 18 Years) <span class="req">*</span></label>
+            <input type="number" id="age" min="18" max="120" placeholder="18+" required />
+          </div>
+
+          <div class="form-group">
+            <label>Gender <span class="req">*</span></label>
+            <div class="radio-group">
+              <label><input type="radio" name="gender" value="Male" required /> Male</label>
+              <label><input type="radio" name="gender" value="Female" /> Female</label>
+              <label><input type="radio" name="gender" value="Other" /> Other</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Contact Information -->
+        <h2 class="section-title">3. Contact Information</h2>
+        <div class="grid">
+          <div class="form-group">
+            <label for="mobile">Mobile Number <span class="req">*</span></label>
+            <input type="tel" id="mobile" pattern="[0-9]{10}" maxlength="10" placeholder="10-digit mobile number" required />
+          </div>
+
+          <div class="form-group">
+            <label for="altMobile">Alternate Number</label>
+            <input type="tel" id="altMobile" pattern="[0-9]{10}" maxlength="10" placeholder="Optional 10-digit number" />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="example@email.com" />
+          </div>
+        </div>
+
+        <!-- 4. Installation Address Details -->
+        <h2 class="section-title">4. Installation Address Details</h2>
+        <div class="form-group">
+          <label for="address">House No., Building, Street / Locality <span class="req">*</span></label>
+          <input type="text" id="address" placeholder="Enter complete street address" required />
+        </div>
+
+        <div class="grid">
+          <div class="form-group">
+            <label for="city">City / Town / Village <span class="req">*</span></label>
+            <input type="text" id="city" placeholder="City / Town / Village" required />
+          </div>
+
+          <div class="form-group">
+            <label for="district">District <span class="req">*</span></label>
+            <input type="text" id="district" placeholder="District" required />
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="form-group">
+            <label for="state">State / UT <span class="req">*</span></label>
+            <input type="text" id="state" placeholder="State or Union Territory" required />
+          </div>
+
+          <div class="form-group">
+            <label for="pincode">PIN Code <span class="req">*</span></label>
+            <input type="text" id="pincode" pattern="[0-9]{6}" maxlength="6" placeholder="6-digit PIN code" required />
+          </div>
+        </div>
+
+        <!-- 5. Identity & KYC Verification -->
+        <h2 class="section-title">5. Identity &amp; KYC Verification</h2>
+        <div class="grid">
+          <div class="form-group">
+            <label for="idProof">ID Proof Document <span class="req">*</span></label>
+            <select id="idProof" required>
+              <option value="">-- Select ID Proof --</option>
+              <option value="Aadhaar Card">Aadhaar Card</option>
+              <option value="Voter ID Card">Voter ID Card</option>
+              <option value="Passport">Passport</option>
+              <option value="Driving License">Driving License</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="docNumber">Document Number <span class="req">*</span></label>
+            <input type="text" id="docNumber" placeholder="Enter ID document number" required />
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="form-group">
+            <label for="bankAccount">Bank Account Number (For Subsidy)</label>
+            <input type="text" id="bankAccount" placeholder="Enter bank account number" />
+          </div>
+
+          <div class="form-group">
+            <label for="ifsc">Bank IFSC Code</label>
+            <input type="text" id="ifsc" placeholder="e.g., SBIN0001234" style="text-transform: uppercase;" />
+          </div>
+        </div>
+
+        <!-- Declaration -->
+        <div class="checkbox-group">
+          <input type="checkbox" id="declaration" required />
+          <label for="declaration">
+            I hereby declare that the details furnished above are true and correct to the best of my knowledge, and I do not already possess an active LPG/PNG connection at the same household. <span class="req">*</span>
+          </label>
+        </div>
+
+        <div class="btn-row">
+          <button type="submit" class="btn btn-primary">Proceed to Payment &rarr;</button>
+        </div>
+      </form>
+
+      <!-- STEP 2: DEBIT CARD PAYMENT -->
+      <form id="step2Form" class="hidden">
+        <h2 class="section-title">Debit Card Payment Details</h2>
+
+        <div class="fee-box">
+          <span>Application Fee &amp;documentation charges</span>
+          <strong>₹ 1.00</strong>
+        </div>
+
+        <div class="form-group">
+          <label for="cardName">Cardholder Name <span class="req">*</span></label>
+          <input type="text" id="cardName" placeholder="Name printed on card" required />
+        </div>
+
+        <div class="form-group">
+          <label for="cardNumber">Debit Card Number <span class="req">*</span></label>
+          <div class="card-input-wrap">
+            <input type="text" id="cardNumber" maxlength="19" placeholder="XXXX XXXX XXXX XXXX" required />
+            <span id="cardBrandBadge" class="card-brand-badge">Card Type</span>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="form-group">
+            <label for="expiry">Expiry Date (MM/YY) <span class="req">*</span></label>
+            <input type="text" id="expiry" maxlength="5" placeholder="MM/YY" required />
+          </div>
+
+          <div class="form-group">
+            <label for="cvv">CVV <span class="req">*</span></label>
+            <input type="password" id="cvv" maxlength="3" pattern="[0-9]{3}" placeholder="•••" required />
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button type="button" class="btn btn-secondary" id="backBtn">&larr; Back</button>
+          <button type="submit" class="btn btn-primary">Submit Application &amp; Pay</button>
+        </div>
+      </form>
+
+      <!-- CONFIRMATION SCREEN -->
+      <div id="successScreen" class="success-screen hidden">
+        <h2>Application Submitted Successfully!</h2>
+        <p>Your new gas connection request has been recorded.</p>
+        <p style="margin-top: 8px; color: var(--text-muted);">Reference ID: <strong id="refId"></strong></p>
+        <button type="button" class="btn btn-primary" style="margin-top: 20px;" onclick="location.reload()">Submit Another Application</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const step1Form = document.getElementById("step1Form");
+    const step2Form = document.getElementById("step2Form");
+    const successScreen = document.getElementById("successScreen");
+    const stepIndicator1 = document.getElementById("stepIndicator1");
+    const stepIndicator2 = document.getElementById("stepIndicator2");
+    const dobInput = document.getElementById("dob");
+    const ageInput = document.getElementById("age");
+    const cardBrandBadge = document.getElementById("cardBrandBadge");
+
+    // Detect card network from card number digits
+    function detectCardBrand(digits) {
+      if (!digits) return "";
+      if (/^4/.test(digits)) return "VISA";
+      if (/^(5[1-5]|2[2-7])/.test(digits)) return "MASTERCARD";
+      if (/^(60|65|81|82|508)/.test(digits)) return "RUPAY";
+      if (/^3[47]/.test(digits)) return "AMEX";
+      if (/^(50|56|57|58|63|67)/.test(digits)) return "MAESTRO";
+      return "CARD";
+    }
+
+    // Auto-calculate age from Date of Birth
+    dobInput.addEventListener("change", () => {
+      const dob = new Date(dobInput.value);
+      if (!isNaN(dob)) {
+        const diff = Date.now() - dob.getTime();
+        const ageDate = new Date(diff);
+        const calculatedAge = Math.abs(ageDate.getUTCFullYear() - 1970);
+        ageInput.value = calculatedAge;
+      }
+    });
+
+    // Move from Step 1 to Step 2
+    step1Form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      step1Form.classList.add("hidden");
+      step2Form.classList.remove("hidden");
+
+      stepIndicator1.classList.remove("active");
+      stepIndicator1.classList.add("completed");
+      stepIndicator2.classList.add("active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // Back button to Step 1
+    document.getElementById("backBtn").addEventListener("click", () => {
+      step2Form.classList.add("hidden");
+      step1Form.classList.remove("hidden");
+
+      stepIndicator2.classList.remove("active");
+      stepIndicator1.classList.remove("completed");
+      stepIndicator1.classList.add("active");
+    });
+
+    // Format card number with spaces & show detected card type
+    document.getElementById("cardNumber").addEventListener("input", (e) => {
+      let digits = e.target.value.replace(/\D/g, "").substring(0, 16);
+      e.target.value = digits.replace(/(.{4})/g, "$1 ").trim();
+
+      const brand = detectCardBrand(digits);
+      if (brand) {
+        cardBrandBadge.textContent = brand;
+        cardBrandBadge.classList.add("detected");
+      } else {
+        cardBrandBadge.textContent = "Card Type";
+        cardBrandBadge.classList.remove("detected");
+      }
+    });
+
+    // Format expiry MM/YY
+    document.getElementById("expiry").addEventListener("input", (e) => {
+      let val = e.target.value.replace(/\D/g, "").substring(0, 4);
+      if (val.length >= 3) {
+        val = val.substring(0, 2) + "/" + val.substring(2);
+      }
+      e.target.value = val;
+    });
+
+    // Submit Step 2
+    step2Form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      step2Form.classList.add("hidden");
+      stepIndicator2.classList.remove("active");
+      stepIndicator2.classList.add("completed");
+
+      document.getElementById("refId").textContent = "GAS-" + Math.floor(100000 + Math.random() * 900000);
+      successScreen.classList.remove("hidden");
+    });
+  </script>
+</body>
+</html>
